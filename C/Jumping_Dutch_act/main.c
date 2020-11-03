@@ -50,7 +50,7 @@ char * sc(int n)
   }
   return none;
 }
-
+/*
 int main(void)
 {
 
@@ -61,6 +61,6 @@ int main(void)
   printf("%s\n", sc(1));
   printf("%s\n", sc(-1));
 
-
   return 0;
 }
+*/
