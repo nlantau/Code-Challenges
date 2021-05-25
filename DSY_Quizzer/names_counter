@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+# nlantau, 2021-05-25
+
+print((len(open(r'names.org').read().strip().split())-1)*len("".join([c for l in open(r'names.org').read().strip().split() for c in l if 65 <= ord(c) <= 122])))
