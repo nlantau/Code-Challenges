@@ -1,0 +1,5 @@
+#!/bin/sh
+# nlantau, 2021-05-25
+
+echo "Hello, $1 how are you doing today?"
+
