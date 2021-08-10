@@ -61,5 +61,7 @@ def decode(b):
 
 
 t = "000111111000111000000000000111111000000111000111000111111111111000000111" 
+print("'hey' == ", end=' ')
 print(encode("hey"))
+print(f'{encode("hey")} ==', end=' ')
 print(decode(t))
