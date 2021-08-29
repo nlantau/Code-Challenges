@@ -6,7 +6,6 @@
 #include <string.h>
 
 
-
 int to_lower(char s)
 {
 	if (96 < s && s < 123) return s - 96;
@@ -20,7 +19,7 @@ char *alphabet_position(const char *t)
 	int *v = malloc(sizeof(int) * len * 4), *vv;
 	char *s = malloc(sizeof(int) * len * 4), buf[5];
 
-	for (; i < len; ++i) v[i] = to_lower(*t), *t++;
+	for (; i < len; ++i) v[i] = to_lower(*t++);
 	vv = v;
 	for (i = 0; i < len; i++) {
 		if (v[i] == 0)
@@ -35,7 +34,6 @@ char *alphabet_position(const char *t)
 
 	return s;
 }
-
 
 int main(void)
 {
