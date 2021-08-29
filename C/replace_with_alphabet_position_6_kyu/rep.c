@@ -17,33 +17,36 @@ int to_lower(char s)
 char *alphabet_position(const char *t)
 {
 	int len = strlen(t), i = 0;
-	char *s = malloc(sizeof(char) * len * 4);
-	char n[3];
+	int *v = malloc(sizeof(int) * len * 4), *vv;
+	char *s = malloc(sizeof(int) * len * 4), buf[5];
 
-	for (; i < len; ++i) {
-		if (to_lower(*t) != 0) {
-			//n[0] = 0,n[1] = 0,n[2] = 0;
-			sprintf(n, "%d", to_lower(*t));
-			for (int k = 0; n[k] != 0; ++k)
-				s[i] = n[k];
-		}
-		*t++;
+	for (; i < len; ++i) v[i] = to_lower(*t), *t++;
+	vv = v;
+	for (i = 0; i < len; i++) {
+		if (v[i] == 0)
+			continue;
+		snprintf(buf, 5, "%d ", v[i]);
+		strcat(s, buf);
 	}
-	printf("s:%s.\n",s);
+	s[strlen(s) - 1] = '\0';
+	v = vv;
+	free(v);
+	v = NULL;
 
-	free(s);
-	s = NULL;
-
-	return "Hej";
+	return s;
 }
 
 
 int main(void)
 {
-	//printf("%s.\n", alphabet_position("abcd"));
-	//printf("%s.\n", alphabet_position("z bcd"));
-	printf("%s.\n", alphabet_position("z"));
+	char *a = "The sunset sets at twelve o' clock.";
+	char *s = alphabet_position("The sunset sets at twelve o' clock.");
 
+	printf("%s =\n ", a);
+	printf("\"%s\"\n", s);
+
+	free(s);
+	s = NULL;
 	return 0;
 }
 
