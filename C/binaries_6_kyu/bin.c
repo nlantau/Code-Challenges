@@ -62,15 +62,14 @@ char *code(const char *org)
 	 */
 
 	// Char * for stage 1,2 & 3
-	char *s1 = calloc(100, sizeof(char)), *s1s;
-	char *s2 = calloc(100, sizeof(char)), *s2s;
-	char *s3 = calloc(100, sizeof(char)), *s3s, *bin_trim;
+	char *s1 = calloc(250, sizeof(char)), *s1s;
+	char *s2 = calloc(250, sizeof(char)), *s2s;
+	char *bin_trim;
 	char *orgs;
 	
 	// Save start pos
 	s1s = s1;
 	s2s = s2;
-	s3s = s3;
 	orgs = org;
 
 	int k = 0, t;
@@ -91,8 +90,11 @@ char *code(const char *org)
 				}
 				*s1++ = '1';
 				s1 = s1s;
+				// s1 is good here
 				sprintf(s1, "%s%s", s1, bin_trim);
 				printf("s1 : %s\n", s1);
+			} else if (k == 1) {
+				sprintf(s1, "%d%d", 1, 1);
 			}
 
 			free(bin_trim);
@@ -101,55 +103,45 @@ char *code(const char *org)
 
 		// Should take care of d = 1 or 0
 		else {
+			sprintf(s1, "%d%d", 1, 0);
 
 		}
+		sprintf(s2, "%s%s", s2, s1);
+		s1 = s1s;
+		memset(s1, '\0', 250);
+
 
 	}
-	*(s1 + 1) = '\0';
+	//*(s1 + 1) = '\0';
 
 	// Restore starter pos
 	s1 = s1s;
 	s2 = s2s;
-	s3 = s3s;
 	org = orgs;
 
 	printf("org: %s\n", org);
 	printf("s1 : %s\n", s1);
+	printf("s2 : %s\n", s2);
 	printf("<---\n");
 
 	// Free dynamic
 	free(s1);
-	free(s2);
-	free(s3);
+	//free(s2);
 	s1 = NULL;
-	s2 = NULL;
-	s3 = NULL;
+	//s2 = NULL;
 
-	return "";
+	return s2;
 }
 
 
 int main(void)
 {
-	/*
-	char *a = bin(3);
-	printf("a:%s strlen(a):%ld\n", a, strlen(a));
-	free(a);
-	a = NULL;
-
-	printf("<----------->\n");
-
-	char *x = bin(4);
-	printf("x:%s strlen(x):%ld\n", x, strlen(x));
-	free(x);
-	x = NULL;
-	*/
-	printf("%s\n", code("0"));
-	printf("%s\n", code("1"));
-	printf("%s\n", code("2"));
-	printf("%s\n", code("3"));
-	printf("%s\n", code("4"));
-	printf("%s\n", code("5"));
+	//printf("%s\n", code("0"));
+	printf("%s\n", code("77338"));
+	//printf("%s\n", code("2"));
+	//printf("%s\n", code("3"));
+	//printf("%s\n", code("4"));
+	//printf("%s\n", code("5"));
 	//printf("%s\n", code("123"));
 	//printf("%s\n", code("77338"));
 	//printf("%s\n", decode("2"));
