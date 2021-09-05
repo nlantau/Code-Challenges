@@ -36,6 +36,42 @@ char *bin(char c)
 
 char *decode(const char *s)
 {
+	/*
+	 * Given a binary string (encoded by code()),
+	 * decode it to base 10.
+	 *
+	 * # Stage 1
+	 * 1. Start from MSB.
+	 * 2. Look at first digit
+	 * 	a. if '1' -> Could be digit 0 or 1
+	 * 	b. else 
+	 * 		look at pos 1 and pos 2:
+	 * 		if pos1 == 0 and pos2 == 1 -> Could be digit 2 or 3
+	 * 		else if pos1 == 0 and pos2 == 0 -> Could be digit 4,5,6 or 7
+	 * 			if not 4,5,6 ot 7
+	 * 				look at pos3
+	 * 				if pos3 == 0 -> either digit 8 or 9
+	 * 					LSB == 0 -> digit 8
+	 * 					LSB == 1 -> digit 9
+	 *
+	 * # Stage 2
+	 * 1. Save the found/matching digit.
+	 * 2. Trim down given string (remove binary part from stage 1)
+	 * 3. Repeat stage 1 for next digit
+	 *
+	 * code(0) --> 10
+	 * code(1) --> 11
+	 * code(2) --> 0110
+	 * code(3) --> 0111
+	 * code(4) --> 001100
+	 * code(5) --> 001101
+	 * code(6) --> 001110
+	 * code(7) --> 001111
+	 * code(8) --> 00011000
+	 * code(9) --> 00011001
+	 *
+	 */
+
 	return "decode";
 }
 
@@ -117,9 +153,16 @@ char *code(const char *org)
 
 int main(void)
 {
-	printf("%s\n", code("77338855"));
-	printf("%s\n", code("77338"));
-	printf("%s\n", code("0011121314"));
+	int i = 0;
+	char s[4];
+	for (; i < 10; i++) {
+		sprintf(s, "%d", i);
+		printf("code(%d) --> %s\n", i, code(s));
+	}
+
+	//printf("%s\n", code("77338855"));
+	//printf("%s\n", code("77338"));
+	//printf("%s\n", code("0011121314"));
 	//printf("%s\n", decode("0"));
 	//printf("%s\n", decode("2"));
 	//printf("%s\n", decode("3"));
