@@ -7,7 +7,7 @@
 
 char *bin(char c)
 {
-	int len = 1, i = 5, k;
+	int i = 5, k;
 	int first_one = 0;
 	char *s = calloc(6, sizeof(char)), *t;
 	char *x = calloc(6, sizeof(char)), *y;
@@ -62,7 +62,7 @@ char *code(const char *org)
 	 */
 
 	// Char * for stage 1,2 & 3
-	char *s1 = calloc(250, sizeof(char)), *s1s;
+	char *s1 = calloc(50, sizeof(char)), *s1s;
 	char *s2 = calloc(250, sizeof(char)), *s2s;
 	char *bin_trim;
 	char *orgs;
@@ -74,15 +74,11 @@ char *code(const char *org)
 
 	int k = 0, t;
 
-	printf("--->\n");
 	for (; *org != '\0'; *org++) {
-
 		// works for d > 1
 		if (*org - 48 > 0) {
 			bin_trim = bin(*org - 48);
-			printf("bin_trim: %s\n", bin_trim);
 			k = strlen(bin_trim);
-			printf("k:%d\n", k);
 			if (k > 1) {
 				t = k - 1;
 				while (t-- != 0) {
@@ -92,7 +88,6 @@ char *code(const char *org)
 				s1 = s1s;
 				// s1 is good here
 				sprintf(s1, "%s%s", s1, bin_trim);
-				printf("s1 : %s\n", s1);
 			} else if (k == 1) {
 				sprintf(s1, "%d%d", 1, 1);
 			}
@@ -100,50 +95,38 @@ char *code(const char *org)
 			free(bin_trim);
 			bin_trim = NULL;
 		} 
-
 		// Should take care of d = 1 or 0
-		else {
+		else 
 			sprintf(s1, "%d%d", 1, 0);
-
-		}
 		sprintf(s2, "%s%s", s2, s1);
 		s1 = s1s;
-		memset(s1, '\0', 250);
-
-
+		memset(s1, '\0', 50);
 	}
-	//*(s1 + 1) = '\0';
 
 	// Restore starter pos
 	s1 = s1s;
 	s2 = s2s;
 	org = orgs;
 
-	printf("org: %s\n", org);
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-	printf("<---\n");
-
 	// Free dynamic
 	free(s1);
-	//free(s2);
 	s1 = NULL;
-	//s2 = NULL;
 
 	return s2;
 }
 
-
 int main(void)
 {
-	//printf("%s\n", code("0"));
+	printf("%s\n", code("77338855"));
 	printf("%s\n", code("77338"));
-	//printf("%s\n", code("2"));
-	//printf("%s\n", code("3"));
-	//printf("%s\n", code("4"));
-	//printf("%s\n", code("5"));
-	//printf("%s\n", code("123"));
-	//printf("%s\n", code("77338"));
+	printf("%s\n", code("0011121314"));
+	//printf("%s\n", decode("0"));
+	//printf("%s\n", decode("2"));
+	//printf("%s\n", decode("3"));
+	//printf("%s\n", decode("4"));
+	//printf("%s\n", decode("5"));
+	//printf("%s\n", decode("123"));
+	//printf("%s\n", decode("77338"));
 	//printf("%s\n", decode("2"));
 	return 0;
 }
