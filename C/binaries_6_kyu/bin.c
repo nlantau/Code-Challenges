@@ -156,19 +156,104 @@ char *decode(const char *org)
 	orgp = org;
 	
 	int i = 0;
+	int bin_index = 0; // 
 	int len = strlen(org);
+
+	/* 0.1.2...3...
+	 * 101101100111
+	 *   ^     ^
+	 *   |     |_ bin_index == 0
+	 *   |
+	 *   bin_index == 0 (start of new bin)
+	 *   *org == *(org + 2)
+	 */
 
 	if (len < 1) return s;
 
+
 	for (;*org != '\0';) {
-		if (*org == 49) {
-			*(org + 1) == 48 ? sprintf(s, "%c", 48) : sprintf(s, "%c", 49);
-			*org++;
-			*org++;
+
+		if (*org == 49) {		// points at '1'
+			if (bin_index == 0) { 	// start of new bin
+				*(org + 1) == 48 ? sprintf(s, "%s%c", s, 48) : sprintf(s, "%s%c",s, 49); // 0 or 1
+				*org++; *org++;
+				bin_index = 0;
+			} else {
+				*org++; // to stop during test
+				bin_index++;
+			}
+		} else if (*org == 48) { 		// points at '0'
+			if (bin_index == 0) {		// start of new bin
+				if (*(org + 1) == 49) { // if next *org is '1' (it's either '2' or '3')
+					if (*(org + 3) == 48) { // '0110'
+						sprintf(s, "%s%c",s, 50); //2
+						*org++; *org++;
+						*org++; *org++;
+						bin_index = 0;
+					} else {
+						sprintf(s, "%s%c", s, 51); //3
+						*org++; *org++;
+						*org++; *org++;
+						bin_index = 0;
+					}
+				} else if (*(org + 1) == 48) { // if next *org is '0' (4 to 9)
+					if (*(org + 2) == 49) { // 4 to 7
+						if (*(org + 4) == 48) { // 4 or 5
+							if (*(org + 5) == 48) { // 4 
+								sprintf(s, "%s%c", s, 52); //4
+								*org++; *org++;
+								*org++; *org++;
+								*org++; *org++;
+								bin_index = 0;
+							} else {
+								sprintf(s, "%s%c", s, 53); //5
+								*org++; *org++;
+								*org++; *org++;
+								*org++; *org++;
+								bin_index = 0;
+							}
+						} else if (*(org + 4) == 49) { // 6 or 7
+								if (*(org + 5) == 48) { // 6
+									sprintf(s, "%s%c", s, 54); //6
+									*org++; *org++;
+									*org++; *org++;
+									*org++; *org++;
+									bin_index = 0;
+								} else {
+									sprintf(s, "%s%c", s, 55); //7
+									*org++; *org++;
+									*org++; *org++;
+									*org++; *org++;
+									bin_index = 0;
+								}
+						}
+					} else if (*(org + 2) == 48) { // 8 or 9
+						if (*(org + 7) == 49) { // 9
+							sprintf(s, "%s%c", s, 57); //9
+							*org++; *org++;
+							*org++; *org++;
+							*org++; *org++;
+							*org++; *org++;
+							bin_index = 0;
+						} else {
+							sprintf(s, "%s%c", s, 56); //8
+							*org++; *org++;
+							*org++; *org++;
+							*org++; *org++;
+							*org++; *org++;
+							bin_index = 0;
+						}
+
+					}
+				}
+			}
+
 		} else {
-			*org++;
+			*org++; // to stop during test
+			bin_index++;
 		}
 	}
+
 
 
 
@@ -190,17 +275,33 @@ int main(void)
 	*/
 
 	char *a = decode("10");
-	printf("0:%s\n", a);
+	printf("10:%s\n", a);
 	free(a); a = NULL;
 
 	char *b = decode("11");
-	printf("1:%s\n", b);
+	printf("11:%s\n", b);
 	free(b); b = NULL;
 
-	char *c = decode("0110");
-	printf("2:%s\n", c);
+	char *c = decode("01101000110111001100011011");
+	printf("2051421:%s\n", c);
 	free(c); c = NULL;
 
+	char *d = decode("001111001111011101110001100000011000001101001101");
+	printf("77338855:%s\n", d);
+	free(d); d = NULL;
+
+	/* code(0) --> 10
+	* code(1) --> 11
+	* code(2) --> 0110
+	* code(3) --> 0111
+	* code(4) --> 001100
+	* code(5) --> 001101
+	* code(6) --> 001110
+	* code(7) --> 001111
+	* code(8) --> 00011000
+	* code(9) --> 00011001
+	*
+	*/
 
 
 	
