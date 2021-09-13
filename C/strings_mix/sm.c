@@ -20,6 +20,7 @@ typedef struct {
 char* mix(char* s1, char* s2);
 void print_struct(cfreq *s, cfreq *t);
 void print_ctable(c_table *s);
+int compare (const void* a, const void* b);
 
 int main(void)
 {
@@ -91,8 +92,6 @@ char* mix(char* s1, char* s2)
 				strcat(s1c, "1:");
 				strcat(s1c, s1ct);
 				strcat(s1c, "/");
-
-
 			} else if (strlen(s1ct) < strlen(s2ct)) {
 				strcat(s1c, "2:");
 				strcat(s1c, s2ct);
@@ -126,17 +125,41 @@ char* mix(char* s1, char* s2)
 	}
 	printf("-> longest        = [%d]\n", longest);
 	printf("-> nbr_of_strings = [%d]\n", nbr_of_strings);
+	printf("<---------------->\n\n");
+
+	char *temp;
 
 	for (int i = 0; i < nbr_of_strings; i++) {
-		for (int j = longest; j >= 0; --j) {
-			if ( strlen(tbone[j]) == longest ) {
-				strcat(s1c, tbone[i]);
+		for (int j = 0; j < nbr_of_strings - i -1; j++) {
+			if (strlen(tbone[j]) > strlen(tbone[j + 1])) {
+				temp = tbone[j];
+				tbone[j] = tbone[j + 1];
+				tbone[j + 1] = temp;
 			}
+
 		}
+		printf("tbone[%2d][0] = [%c], "
+			"tbone[%2d][2] = [%c]\n", 
+			i, tbone[i][0], i, tbone[i][2]);
 	}
 
+	/* COMPLETED: Sorted by lenght
+	 * TODO: Sort equally length strings by lexicographic order
+	 *
+	 */
+
+
+
+
+
+	printf("\n\n<---------------->\n");
+	
 	printf("s1c  = [%s]\n", s1c);
 
+	for (int i = 0; tbone[i] != '\0'; i++)
+		printf("tbone[%2d] = [%9s], "
+			"strlen(tbone[%2d]) = [%ld]\n",
+			i, tbone[i], i, strlen(tbone[i]) );
 
 
 
@@ -158,6 +181,7 @@ char* mix(char* s1, char* s2)
 	
 	return s1cp;
 }
+
 
 void print_ctable(c_table *s)
 {
