@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 typedef struct {
 	char chr;
@@ -11,7 +12,7 @@ typedef struct {
 }cfreq;
 
 typedef struct {
-	char num_or_sign;
+	char nos;
 	char chr;
 	int len;
 } c_table;
@@ -30,7 +31,7 @@ int main(void)
 
 
 	char *s3 = mix(s1,s2);
-	printf("-> [%s]\n", s3);
+	printf("main -> [%s]\n", s3);
 
 	free(s3); s3 = NULL;
 	return 0;
@@ -71,7 +72,9 @@ char* mix(char* s1, char* s2)
 	char *s1ct = calloc(1, 100), *s1ctp = s1ct; // *s1 count temp
 	char *s2ct = calloc(1, 100), *s2ctp = s2ct; // *s2 count temp
 
+	char **tbone = NULL;
 
+	int k = 0, ts = 2;
 	for (int i = 0; i < 26; i++) {
 
 		// Only 'strictly greater than 1 is interesting
@@ -88,58 +91,77 @@ char* mix(char* s1, char* s2)
 				strcat(s1c, "1:");
 				strcat(s1c, s1ct);
 				strcat(s1c, "/");
-				//sprintf(s1c, "%s1:%s/",s1c, s1ct);
+
+
 			} else if (strlen(s1ct) < strlen(s2ct)) {
 				strcat(s1c, "2:");
 				strcat(s1c, s2ct);
 				strcat(s1c, "/");
-				//sprintf(s1c, "%s2:%s/",s1c, s2ct);
 			} else if (strlen(s1ct) == strlen(s2ct)) {
 				strcat(s1c, "=:");
 				strcat(s1c, s2ct);
 				strcat(s1c, "/");
-				//sprintf(s1c, "%s=:%s/",s1c, s2ct);
 			}
+			tbone = realloc(tbone, ++ts * sizeof(char*));
+			tbone[k] = calloc(1, strlen(s1c) + 1);
+			strcpy(tbone[k++], s1c);
 
+			memset(s1c, '\0', 100);
 			memset(s1ct, '\0', 100);
 			memset(s2ct, '\0', 100);
-
 		}
 	}
 
+	for (int i = 0; tbone[i] != '\0'; i++)
+		printf("tbone[%2d] = [%s], "
+			"strlen(tbone[%d]) = [%ld]\n", i, tbone[i], i, strlen(tbone[i]) );
+
+
+
+
+
+
+
+
+
+
+
+
+	for (int i = 0; tbone[i] != '\0'; i++)
+		free(tbone[i]);
+	free(tbone); tbone = NULL;
+
 	s1ct = s1ctp;
 	s2ct = s2ctp;
-
 	// String count thing is complete
 	// Now - need to put in correct order
 	
-	// s1c is our string.
-	//s1cp = s1c;
+	//char *s1c  = calloc(1, 100), *s1cp = s1c;
+	//char *s1ct = calloc(1, 100), *s1ctp = s1ct; // *s1 count temp
+	//char *s2ct = calloc(1, 100), *s2ctp = s2ct; // *s2 count temp
 	
 	printf("s1c  = [%s]\n", s1cp);
 	printf("s1c  = [%s]\n", s1c);
 	
 	c_table c_o[26];
 
-	/* c_o[0].num_or_sign = '1', '2' or '='
-	 * c_o[0].chr         = 'a' -> 'z'
-	 * c_o[0].len         = number of letters until '/'
-	 */
-
-	for (int i = 0; i < 26, *s1c != '\0'; i++) {
-		//printf("*s1c = [%c]\n", *s1c);
-		c_o[i].num_or_sign = *s1c;
-		c_o[i].chr = *(s1c +2);
-		c_o[i].len = 1;
-		while(*s1c == *(s1c+1)) {
-			c_o[i].len++;
-			*s1c++;
-		}
-		c_o[i].len++;
-	}
-	print_ctable(c_o);
+	//c_o[0].num_or_sign = '1', '2' or '='
+	//c_o[0].chr         = 'a' -> 'z'
+	//c_o[0].len         = number of letters until '/'
+	//
 
 	s1c = s1cp;
+
+	//int i = 0;
+	//for (i = 0, s1cp = s1c ; i < 26 && *s1cp != '\0'; s1cp++, i++) {
+		//printf("s1c[%d] = [%c]\n", i, *s1cp);
+		//c_o[i].nos = *s1cp++;
+	//}
+
+	//print_ctable(c_o);
+
+	//s1c = s1cp;
+	s1cp = s1c;
 	printf("s1c  = [%s]\n", s1cp);
 	printf("s1c  = [%s]\n", s1c);
 	printf("s1ct = [%s]\n", s1ctp);
@@ -155,7 +177,7 @@ void print_ctable(c_table *s)
 	for (int i = 0; i < 26; i++) {
 		printf("c_o[%2d].nos = [%2c] | c_o[%2d]."
 		       "chr = [%2c] | c_o[%2d].len = [%2d]\n", 
-		       i, s[i].num_or_sign,
+		       i, s[i].nos,
 		       i, s[i].chr, i, s[i].len);
 	}
 }
