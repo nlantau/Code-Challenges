@@ -64,7 +64,7 @@ char* mix(char* s1, char* s2)
 		s2 = ps2;
 	}
 
-	print_struct(ss1, ss2);
+	//print_struct(ss1, ss2);
 
 	// combine struct data to a string
 	char *s1c = calloc(1, 100), *s1cp = s1c;
@@ -113,18 +113,9 @@ char* mix(char* s1, char* s2)
 	}
 
 	for (int i = 0; tbone[i] != '\0'; i++)
-		printf("tbone[%2d] = [%s], "
-			"strlen(tbone[%d]) = [%ld]\n", i, tbone[i], i, strlen(tbone[i]) );
-
-
-
-
-
-
-
-
-
-
+		printf("tbone[%2d] = [%9s], "
+			"strlen(tbone[%2d]) = [%ld]\n",
+			i, tbone[i], i, strlen(tbone[i]) );
 
 
 	for (int i = 0; tbone[i] != '\0'; i++)
@@ -133,35 +124,8 @@ char* mix(char* s1, char* s2)
 
 	s1ct = s1ctp;
 	s2ct = s2ctp;
-	// String count thing is complete
-	// Now - need to put in correct order
-	
-	//char *s1c  = calloc(1, 100), *s1cp = s1c;
-	//char *s1ct = calloc(1, 100), *s1ctp = s1ct; // *s1 count temp
-	//char *s2ct = calloc(1, 100), *s2ctp = s2ct; // *s2 count temp
-	
-	printf("s1c  = [%s]\n", s1cp);
-	printf("s1c  = [%s]\n", s1c);
-	
-	c_table c_o[26];
-
-	//c_o[0].num_or_sign = '1', '2' or '='
-	//c_o[0].chr         = 'a' -> 'z'
-	//c_o[0].len         = number of letters until '/'
-	//
-
 	s1c = s1cp;
 
-	//int i = 0;
-	//for (i = 0, s1cp = s1c ; i < 26 && *s1cp != '\0'; s1cp++, i++) {
-		//printf("s1c[%d] = [%c]\n", i, *s1cp);
-		//c_o[i].nos = *s1cp++;
-	//}
-
-	//print_ctable(c_o);
-
-	//s1c = s1cp;
-	s1cp = s1c;
 	printf("s1c  = [%s]\n", s1cp);
 	printf("s1c  = [%s]\n", s1c);
 	printf("s1ct = [%s]\n", s1ctp);
