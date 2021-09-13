@@ -117,6 +117,29 @@ char* mix(char* s1, char* s2)
 			"strlen(tbone[%2d]) = [%ld]\n",
 			i, tbone[i], i, strlen(tbone[i]) );
 
+	int nbr_of_strings = 0;
+	int longest = 0;
+	for (int i = 0; tbone[i] != '\0'; i++) {
+		nbr_of_strings++;
+		if (strlen(tbone[i]) > longest)
+			longest = strlen(tbone[i]);
+	}
+	printf("-> longest        = [%d]\n", longest);
+	printf("-> nbr_of_strings = [%d]\n", nbr_of_strings);
+
+	for (int i = 0; i < nbr_of_strings; i++) {
+		for (int j = longest; j >= 0; --j) {
+			if ( strlen(tbone[j]) == longest ) {
+				strcat(s1c, tbone[i]);
+			}
+		}
+	}
+
+	printf("s1c  = [%s]\n", s1c);
+
+
+
+
 
 	for (int i = 0; tbone[i] != '\0'; i++)
 		free(tbone[i]);
