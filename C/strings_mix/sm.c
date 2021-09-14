@@ -9,7 +9,7 @@
 typedef struct {
 	char chr;
 	int dig;
-}cfreq;
+} cfreq;
 
 typedef struct {
 	char nos;
@@ -136,6 +136,33 @@ char* mix(char* s1, char* s2)
 				tbone[j] = tbone[j + 1];
 				tbone[j + 1] = temp;
 			}
+			else if (strlen(tbone[j]) == strlen(tbone[j + 1])) {
+				if (tbone[i][0] != '=' && tbone[j][0] != '=') {
+					if (tbone[j][2] < tbone[j+1][2]) {
+					temp = tbone[j];
+					tbone[j] = tbone[j + 1];
+					tbone[j + 1] = temp;
+					}
+				}
+				if (tbone[i][0] == '=' && tbone[j][0] == '=') {
+					printf("--> i == '=' && j == '='\n");
+					//printf("1ti: [%c], tj: [%c]\n", tbone[i][2], tbone[j][2]);
+					//printf("1ti: [%c], tj: [%c]\n", tbone[i][0], tbone[j][0]);
+					for (int x = 0; x < nbr_of_strings; x++) {
+					if (tbone[x][2] > tbone[i][2]
+					    && tbone[x][0] == '='
+					    && tbone[i][0] == '=') {
+						temp = tbone[i];
+						tbone[i] = tbone[x];
+						tbone[x] = temp;
+
+						printf("tx: [%c], tj: [%c]\n", tbone[x][2], tbone[i][2]);
+						printf("tx: [%c], tj: [%c]\n", tbone[x][0], tbone[i][0]);
+					}
+
+					}
+				}
+			}
 
 		}
 		printf("tbone[%2d][0] = [%c], "
@@ -146,9 +173,28 @@ char* mix(char* s1, char* s2)
 	/* COMPLETED: Sorted by lenght
 	 * TODO: Sort equally length strings by lexicographic order
 	 *
-	 */
+	 *
+	for (int i = 0; tbone[i] != '\0'; i++)
+		printf("tbone[%2d] = [%9s], "
+			"strlen(tbone[%2d]) = [%ld]\n",
+			i, tbone[i], i, strlen(tbone[i]) );
+	for (int i = 0; i < nbr_of_strings - 1 ; i++) {
+		if (tbone[i][0] == '=') {
+			for (int j=0; j < nbr_of_strings - i -1; j++) {
+				if (tbone[j][0] == '=') {
+					if (tbone[j][2] > tbone[i][2]) {
+						temp = tbone[j];
+						tbone[j] = tbone[i];
+						tbone[i] = temp;
 
-
+						printf("ti: [%c], tj: [%c]\n", tbone[i][2], tbone[j][2]);
+						printf("ti: [%c], tj: [%c]\n", tbone[i][0], tbone[j][0]);
+					}
+				}
+			}
+		}
+	}
+	*/
 
 
 
