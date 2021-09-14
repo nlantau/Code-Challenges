@@ -16,6 +16,7 @@ typedef struct {
 char* mix(char* s1, char* s2);
 void print_struct(c_table *s, c_table *t);
 void print_ctable(c_table **s);
+void print_ctable_str(c_table **s);
 
 int main(void)
 {
@@ -48,11 +49,10 @@ char* mix(char* s1, char* s2)
 		s1 = ps1;
 		s2 = ps2;
 	}
-	print_struct(ss1, ss2);
+	//print_struct(ss1, ss2);
 	
-	int k = 0, ts = 2;
-	int s1ctc = 0, s2ctc = 0;
 	c_table **f = NULL;
+	int s1ctc = 0, s2ctc = 0;
 	int fc = 0, fs = 2;
 
 	for (int i = 0; i < 26; i++) {
@@ -88,23 +88,55 @@ char* mix(char* s1, char* s2)
 			}
 		}
 	}
-
+	printf("<<<------ *****  ------>>>\n");
 	print_ctable(f);
+	c_table *temp;
+	char buf[30];
+	char *fin = calloc(1,100), *finp = fin;
+
+	for (int i = 0; f[i] != '\0'; i++) {
+		for (int j = 0; f[j+1] != '\0'; j++) {
+			if (f[i]->len > f[j]->len) {
+				temp = f[i];
+				f[i] = f[j];
+				f[j] = temp;
+				memset(buf, f[j]->chr, f[j]->len);
+			}
+		}
+		strcat(fin, buf);
+		memset(buf, '\0', 30);
+		
+	}
+	printf("<<<------ *****  ------>>>\n");
+
+	print_ctable_str(f);
+
+	printf("<<<------ *****  ------>>>\n");
+
 	printf("Here\n");
 
 	for (int i = 0; f[i] != '\0'; i++)
 		free(f[i]);
 	free(f); f = NULL;
+	fin = finp;
 
-	return calloc(1,1);
+	return fin;
 }
 
+void print_ctable_str(c_table **s)
+{
+	for (int i = 0; s[i] != '\0'; i++) {
+		printf("%c:%c*%d/",
+		       s[i]->nos, s[i]->chr, s[i]->len);
+	}
+	printf("\n");
+}
 
 void print_ctable(c_table **s)
 {
 	for (int i = 0; s[i] != '\0'; i++) {
-		printf("c_o[%2d].nos = |%2c|->| c_o[%2d]."
-		       "chr = |%2c|->| c_o[%2d].len = |%2d|\n", 
+		printf("c_o[%2d].nos = |%2c| c_o[%2d]."
+		       "chr = |%2c| c_o[%2d].len = |%2d|\n", 
 		       i, s[i]->nos,
 		       i, s[i]->chr, i, s[i]->len);
 	}
@@ -113,8 +145,8 @@ void print_ctable(c_table **s)
 void print_struct(c_table *s, c_table *t)
 {
 	for (int i = 0; i < 26; i++)
-		printf("ss1[%2d].chr = [%2c]->ss1[%2d].dig = [%2d] | "
-		       "ss2[%2d].chr = [%2c]->ss2[%2d].dig = [%2d]\n",
+		printf("ss1[%2d].chr = [%2c] ss1[%2d].dig = [%2d] | "
+		       "ss2[%2d].chr = [%2c] ss2[%2d].dig = [%2d]\n",
 		       i, s[i].chr, i, s[i].dig,
 		       i, t[i].chr, i, t[i].dig);
 }
