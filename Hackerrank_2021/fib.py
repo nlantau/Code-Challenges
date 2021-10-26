@@ -17,7 +17,10 @@ def fib(n):
         l[i] = l[i-1] + l[i-2]
     return l[n]
 
-n = 35
+n = 2
+k = 1
+#print(fib(n))
 
-print(fib(n))
+
 print(fibonacci(n))
+print(fibonacci(k))
