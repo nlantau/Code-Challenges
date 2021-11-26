@@ -1,4 +1,5 @@
-use rust_2021::d1_2015::{day1_2015a, day1_2015b};
+use rust_2021::d1_2015::*;
+use rust_2021::d2_2015::*;
 use rust_2021::day1::day1a;
 
 fn main() {
@@ -11,6 +12,7 @@ fn main() {
         "d1_2015b" => day1_2015b().0.to_string()
             + ", "
             + &*day1_2015b().1.to_string(),
+        "d2_2015" => day2(),
         _ => "What?".to_string(),
     };
     println!("{}", result);
