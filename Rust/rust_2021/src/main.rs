@@ -6,11 +6,12 @@ use rust_2021::d1_2015::*;
 use rust_2021::d2_2015::*;
 use rust_2021::day1::day1a;
 use rust_2021::*;
-use rust_2021::d1_2021::read_data;
+use rust_2021::d1_2021::*;
 
 
 fn main() {
-    read_data();
+    println!("{}", solution_a());
+    println!("{}", solution_b());
 }
 
 fn take_env_args() {
