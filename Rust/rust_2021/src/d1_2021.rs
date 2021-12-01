@@ -13,13 +13,13 @@ pub fn read_data() {
         .filter(|(a, b)| a < b)
         .count();
 
-    println!("Day 1a: {}", d1a);
-
     let d1b = lines.iter()
         .tuple_windows::<(_, _, _)>()
         .map(|(a, b, c)| a + b + c)
         .tuple_windows()
         .filter(|(a, b)| a < b)
         .count();
+
+    println!("Day 1a: {}", d1a);
     println!("Day 1b: {}", d1b);
 }
