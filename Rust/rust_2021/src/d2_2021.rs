@@ -1,19 +1,35 @@
 use std::fs::{self, File};
 use itertools::Itertools;
 
-pub fn d2_2021_solution() {
-    let solution = String::from("Hej");
-    let v = read_data_i32();
-    let s = read_data_string();
-    println!("{}", solution);
+pub fn d2_2021_improved_solution() {
+    let fin = include_str!("../assets/d2_2021.txt");
+    let l: Vec<(String, i32)> = fin
+        .lines()
+        .map(|c| c.split_whitespace().collect::<Vec<_>>())
+        .map(|c| (c[0].to_string(), c[1].parse::<i32>().unwrap()))
+        .collect();
+
+    let (hora, deep, aima) = l
+        .iter()
+        .fold((0, 0, 0), |mut sum, (s, n)| {
+            match s.as_str() {
+                "forward" => {
+                    sum.0 += n;
+                    sum.1 += sum.2 * n;
+                }
+                "up" => sum.2 -= n,
+                "down" => sum.2 += n,
+                _ => ()
+            };
+            sum
+        });
+
+
+    println!("{}, {}, {}", hora, deep, aima);
+    println!("Day 2b: {}", hora * deep);
 }
 
-
-fn read_data_string() -> String {
-    fs::read_to_string("assets/d2_2021.txt").unwrap()
-}
-
-pub fn read_data_i32() {
+pub fn d2_2021_first_solution() {
     let fin = fs::read_to_string("assets/d2_2021.txt").unwrap();
 
     let mut hor = 0;
@@ -40,5 +56,6 @@ pub fn read_data_i32() {
         };
     }
 
+    println!("{}", hor);
     println!("Day 2b: {}", hor * dep);
 }
