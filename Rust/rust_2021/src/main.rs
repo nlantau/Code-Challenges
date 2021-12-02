@@ -9,10 +9,11 @@ use rust_2021::*;
 use rust_2021::d1_2021::*;
 use rust_2021::d2_2021::{d2_2021_improved_solution, d2_2021_first_solution};
 use rust_2021::d3_2015::d3_2015_solution;
+use rust_2021::d3_2021::d3_2021_solution;
 
 
 fn main() {
-    d3_2015_solution();
+    d3_2021_solution();
 }
 
 fn prev_days() {
@@ -20,6 +21,7 @@ fn prev_days() {
     println!("{}", solution_b());
     d2_2021_first_solution();
     d2_2021_improved_solution();
+    d3_2015_solution();
 }
 
 fn take_env_args() {
