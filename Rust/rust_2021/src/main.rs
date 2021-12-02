@@ -7,11 +7,12 @@ use rust_2021::d2_2015::*;
 use rust_2021::day1::day1a;
 use rust_2021::*;
 use rust_2021::d1_2021::*;
-use rust_2021::d2_2021::d2_2021_solution;
+use rust_2021::d2_2021::{d2_2021_solution, read_data_i32};
 
 
 fn main() {
-    d2_2021_solution();
+    //d2_2021_solution();
+    read_data_i32();
 }
 
 fn prev_days() {
