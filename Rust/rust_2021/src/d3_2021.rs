@@ -40,88 +40,40 @@ pub fn d3_2021_solution() {
     let epsilon = 0b1111_1111_1111 ^ gamma;
 
 
-    println!("Gamma rate: {}", occurs);
-    println!("Gamma rate: {}", gamma);
-    println!("Epsilon rate: {}", epsilon);
-    println!("Res: {}", gamma * epsilon);
+    println!("Part 1: {}", gamma * epsilon);
     assert_eq!(gamma * epsilon, 3958484);
 
-    part2(gamma, epsilon, &occurs);
+    part2();
 }
 
-fn part2(gamma: usize, epsilon: usize, str_gamma: &str) {
-    println!("Part 2");
-    let fin = include_str!("../assets/d3_2021.txt");
-    let data: Vec<Vec<u32>> = fin
-        .lines()
-        .map(|l| l.chars().map(|c| c.to_digit(2).unwrap()).collect())
-        .collect();
+fn part2() {
+    let mut oxygen: Vec<&str> = include_str!("../assets/d3_2021.txt").lines().collect();
+    let mut co2: Vec<&str> = oxygen.clone();
 
-    let data_b: Vec<_> = data
-        .iter()
-        .map(|v| v.iter().join(""))
-        .collect();
-
-    data_b.iter().for_each(|s| println!("{}", s));
-
-    let mut matched_vecs: Vec<&str> = Vec::new();
-
-    for r in data_b.iter() {
-       todo!();
+    for i in 0..12 {
+        if oxygen.len() == 1 { break; }
+        let (ox1, ox0): (Vec<&str>, Vec<&str>) = oxygen
+            .iter()
+            .partition(|&line| {
+                line.chars().nth(i).unwrap() == '1'
+            });
+        oxygen = if ox1.len() >= ox0.len() { ox1 } else { ox0 }
+    }
+    for i in 0..12 {
+        if co2.len() == 1 { break; }
+        let (co0, co1): (Vec<&str>, Vec<&str>) = co2
+            .iter()
+            .partition(|&line| {
+                line.chars().nth(i).unwrap() == '0'
+            });
+        co2 = if co0.len() <= co1.len() { co0 } else { co1 }
     }
 
-    /*
-    oxygen generator rating: most common value
-    CO2 scrubber rating:     least common value
+    let oxy = isize::from_str_radix(oxygen[0], 2).unwrap();
+    let co2 = isize::from_str_radix(co2[0], 2).unwrap();
 
-
-     */
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-    loop {
-        for v in data.iter() {
-            s = v.iter().join("").parse::<usize>().unwrap() & shifter;
-            let g = gamma & shifter;
-
-            if s == g {
-                matching_vecs += 1;
-            }
-            println!("{}", v.iter().join(""));
-            panic!("TESTING");
-        }
-        if matching_vecs == 1 {
-            println!("matching vec: {}", s);
-            break;
-        } else {
-            matching_vecs = 0;
-        }
-        shifter = shifter >> 1;
-        if shifter == 11 || shifter < 1{
-            println!("Bad algo");
-            break
-        }
-    }
-
-     */
-
-    /*
-    let res = 0;
-    for v in data.iter() {
-        v.iter().for_each(|x| print!("{}", x));
-        println!();
-    }
-     */
+    println!("Part 2: {}", oxy * co2);
+    assert_eq!(oxy * co2, 1613181);
 }
 
 
