@@ -36,20 +36,94 @@ pub fn d3_2021_solution() {
         }
         ).join("");
 
-    let gamma = isize::from_str_radix(&occurs, 2).unwrap();
+    let gamma = usize::from_str_radix(&occurs, 2).unwrap();
     let epsilon = 0b1111_1111_1111 ^ gamma;
-
-
 
 
     println!("Gamma rate: {}", occurs);
     println!("Gamma rate: {}", gamma);
     println!("Epsilon rate: {}", epsilon);
     println!("Res: {}", gamma * epsilon);
+    assert_eq!(gamma * epsilon, 3958484);
 
-
-
+    part2(gamma, epsilon, &occurs);
 }
+
+fn part2(gamma: usize, epsilon: usize, str_gamma: &str) {
+    println!("Part 2");
+    let fin = include_str!("../assets/d3_2021.txt");
+    let data: Vec<Vec<u32>> = fin
+        .lines()
+        .map(|l| l.chars().map(|c| c.to_digit(2).unwrap()).collect())
+        .collect();
+
+    let data_b: Vec<_> = data
+        .iter()
+        .map(|v| v.iter().join(""))
+        .collect();
+
+    data_b.iter().for_each(|s| println!("{}", s));
+
+    let mut matched_vecs: Vec<&str> = Vec::new();
+
+    for r in data_b.iter() {
+       todo!();
+    }
+
+    /*
+    oxygen generator rating: most common value
+    CO2 scrubber rating:     least common value
+
+
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    loop {
+        for v in data.iter() {
+            s = v.iter().join("").parse::<usize>().unwrap() & shifter;
+            let g = gamma & shifter;
+
+            if s == g {
+                matching_vecs += 1;
+            }
+            println!("{}", v.iter().join(""));
+            panic!("TESTING");
+        }
+        if matching_vecs == 1 {
+            println!("matching vec: {}", s);
+            break;
+        } else {
+            matching_vecs = 0;
+        }
+        shifter = shifter >> 1;
+        if shifter == 11 || shifter < 1{
+            println!("Bad algo");
+            break
+        }
+    }
+
+     */
+
+    /*
+    let res = 0;
+    for v in data.iter() {
+        v.iter().for_each(|x| print!("{}", x));
+        println!();
+    }
+     */
+}
+
 
 fn transpose2<T>(v: Vec<Vec<T>>) -> Vec<Vec<T>> {
     assert!(!v.is_empty());
