@@ -40,6 +40,22 @@ fn part1() {
 
     println!("{:?}", pdata);
 
+    for (i, row) in (0..1000).enumerate() {
+        for (j, col) in (0..1000).enumerate() {
+            grid[i][j] += 1;
+        }
+    }
 
-    //println!("{:?}", grid);
+
 }
+
+
+
+
+
+
+
+
+
+
+
