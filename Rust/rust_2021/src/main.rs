@@ -13,10 +13,11 @@ use rust_2021::d3_2021::d3_2021_solution;
 use rust_2021::d4_2021::d4_2021_solution;
 use rust_2021::d5_2021::d5_2021_solution;
 use rust_2021::d6_2021::d6_2021_solution;
+use rust_2021::d7_2021::d7_2021_solution;
 
 
 fn main() {
-    d6_2021_solution();
+    d7_2021_solution();
 }
 
 fn prev_days() {
@@ -28,6 +29,7 @@ fn prev_days() {
     d3_2021_solution();
     //d4_2021_solution(); // Not finished part 1 nor 2
     d5_2021_solution();
+    d6_2021_solution();
 }
 
 fn take_env_args() {

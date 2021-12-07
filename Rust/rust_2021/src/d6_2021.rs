@@ -1,4 +1,7 @@
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::{BufReader, Lines};
+use cached::proc_macro::cached;
 
 pub fn d6_2021_solution() {
     part1();
@@ -53,4 +56,55 @@ fn part2() {
     }
     println!("Part 2: {}", fishes.into_iter().sum::<usize>());
     assert_eq!(fishes.into_iter().sum::<usize>(), 1710166656900);
+}
+
+/*
+Other people's solutions
+ */
+fn rounds(lines: Lines<BufReader<File>>, rounds: usize) -> Result<u128, Box<dyn std::error::Error>> {
+    let mut new;
+
+    let mut old = vec![0u128; 9];
+    // reads file, splits on ',', and increments position 0 through 8.
+    lines.for_each(|x| x.unwrap().split(',').filter_map(|x| x.parse::<usize>().ok()).for_each(|x| old[x] += 1));
+
+    for _ in 0..rounds {
+        new = vec![0; 9];
+        // .rev() is important, as it needs to do 0 last.
+        for (i, &val) in old.iter().enumerate().rev() {
+            match i {
+                1..=8 => new[i - 1] = val,
+                0 => {
+                    new[6] += val;
+                    new[8] += val;
+                }
+                _ => unreachable!()
+            }
+        }
+        // i love ownership
+        old = new;
+    }
+    Ok(old.iter().fold(0, |tot, x| tot + x))
+}
+
+
+#[cached]
+fn fish(days: u64, state: u32) -> u64 {
+    if days == 0 {
+        1
+    } else if state == 0 {
+        fish(days - 1, 6) + fish(days - 1, 8)
+    } else {
+        fish(days - 1, state - 1)
+    }
+}
+
+fn solve_v2(input: &str, days: u64) -> u64 {
+    input
+        .trim()
+        .split(',')
+        .map(str::parse::<u32>)
+        .map(Result::unwrap)
+        .map(|age| fish(days, age))
+        .sum()
 }

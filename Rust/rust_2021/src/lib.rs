@@ -11,3 +11,4 @@ pub mod d3_2021;
 pub mod d4_2021;
 pub mod d5_2021;
 pub mod d6_2021;
+pub mod d7_2021;
