@@ -36,85 +36,33 @@ fn part1() {
 
 fn part2() {
     let inp = get_data();
-    let errs = syntax_repair2(&inp);
+    let errs = syntax_repair(&inp);
 }
 
-#[derive(Debug)]
-struct Token {
-    token: char,
-    expected_closer: char,
-    found_closer: char,
-    complete: bool,
-    position: i32,
-}
 
-impl Token {
-    fn new() -> Token {
-        Token {
-            token: '=',
-            expected_closer: '?',
-            found_closer: '!',
-            complete: false,
-            position: -1,
-        }
-    }
-
-    fn set_complete(&mut self) {
-        let b = self.expected_closer == self.found_closer;
-        self.complete = b;
-    }
-}
-
-fn syntax_repair2(inp: &[Vec<char>]) -> Vec<(char, char)> {
+#[allow(unused_mut)]
+fn syntax_repair(inp: &[Vec<char>]) -> Vec<(char, char)> {
     let mut error_pairs: Vec<(char, char)> = Vec::new();
     let mut stack: Vec<char> = Vec::new();
     let mut missing: Vec<char> = Vec::new();
 
     for v in inp.iter() {
         for c in v.iter() {
-            if is_opener(c) {
-                stack.push(*c);
-            } else if is_closer(c) {
-                let open_token = stack.pop().unwrap();
-
-                if open_token == '(' && *c != ')' {
-                    //error_pairs.push((')', *c));
-                    missing.push(')');
-                } else if open_token == '[' && *c != ']' {
-                    //error_pairs.push((']', *c));
-                    missing.push(']');
-                } else if open_token == '{' && *c != '}' {
-                    //error_pairs.push(('}', *c));
-                    missing.push('}');
-                } else if open_token == '<' && *c != '>' {
-                    //error_pairs.push(('>', *c));
-                    missing.push('>');
-                }
+            match c {
+                '(' => stack.push(*c),
+                '[' => stack.push(*c),
+                '{' => stack.push(*c),
+                '<' => stack.push(*c),
+                _ => panic!(),
             }
         }
     }
+
     missing.push('-');
     missing.iter().for_each(|c| println!("{}", c));
     error_pairs
 }
 
-#[allow(unused_mut)]
-fn syntax_repair(inp: &[Vec<char>]) -> Vec<Token> {
-    let mut stack: Vec<char> = Vec::new();
-    let mut tokens: Vec<Token> = Vec::new();
-
-    for v in inp.iter() {
-        for (idx, opener) in v.iter().enumerate() {
-            if is_opener(opener) {
-                let mut boken: Token = Token::new();
-                boken.token = *opener;
-                tokens.push(boken);
-            }
-        }
-    }
-    dbg!(&tokens);
-    tokens
-}
 
 fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
     let mut error_pairs: Vec<(char, char)> = Vec::new();
