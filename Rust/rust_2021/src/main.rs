@@ -6,6 +6,7 @@ use rust_2021::d1_2015::*;
 use rust_2021::d2_2015::*;
 use rust_2021::day1::day1a;
 use rust_2021::*;
+use rust_2021::d10_2021::d10_2021_solution;
 use rust_2021::d1_2021::*;
 use rust_2021::d2_2021::{d2_2021_improved_solution, d2_2021_first_solution};
 use rust_2021::d3_2015::d3_2015_solution;
@@ -20,7 +21,7 @@ use rust_2021::playground::pass_reference_update_val;
 
 
 fn main() {
-    d9_2021_solution();
+    d10_2021_solution();
 }
 
 fn prev_days() {
@@ -35,6 +36,7 @@ fn prev_days() {
     d6_2021_solution();
     d7_2021_solution();
     d8_2021_solution();
+    d9_2021_solution();
     pass_reference_update_val();
 }
 
