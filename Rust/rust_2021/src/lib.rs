@@ -14,3 +14,4 @@ pub mod d6_2021;
 pub mod d7_2021;
 pub mod d8_2021;
 pub mod d9_2021;
+pub mod playground;

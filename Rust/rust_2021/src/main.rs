@@ -16,6 +16,7 @@ use rust_2021::d6_2021::d6_2021_solution;
 use rust_2021::d7_2021::d7_2021_solution;
 use rust_2021::d8_2021::d8_2021_solution;
 use rust_2021::d9_2021::d9_2021_solution;
+use rust_2021::playground::pass_reference_update_val;
 
 
 fn main() {
@@ -34,6 +35,7 @@ fn prev_days() {
     d6_2021_solution();
     d7_2021_solution();
     d8_2021_solution();
+    pass_reference_update_val();
 }
 
 fn take_env_args() {
