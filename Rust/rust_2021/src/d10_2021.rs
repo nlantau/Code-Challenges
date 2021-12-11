@@ -83,7 +83,16 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
             incomplete.push(v.clone());
         }
     }
+    let mut incomplete_missing = get_incomplete_vectors(&incomplete);
+    let mut scores: Vec<u128> = calculate_incomplete_score(&mut incomplete_missing);
+    scores.sort_unstable();
+    let valve = scores[scores.len() / 2];
+    println!("Part 2: {}", valve);
+    assert_eq!(valve, 2421222841);
+    error_pairs
+}
 
+fn get_incomplete_vectors(incomplete: &[Vec<char>]) -> Vec<Vec<char>> {
     let mut incomplete_missing: Vec<Vec<char>> = Vec::new();
     for (i, v) in incomplete.iter().enumerate() {
         let mut stack: Vec<char> = Vec::new();
@@ -97,8 +106,10 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
         }
         incomplete_missing.push(stack);
     }
+    incomplete_missing
+}
 
-
+fn calculate_incomplete_score(incomplete_missing: &mut Vec<Vec<char>>) -> Vec<u128> {
     let mut scores: Vec<u128> = Vec::new();
     for v in incomplete_missing.iter_mut() {
         let mut score: u128 = 0;
@@ -113,13 +124,7 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
         }
         scores.push(score);
     }
-
-    scores.sort_unstable();
-    let valze = scores[scores.len() / 2];
-    println!("Part 2: {}", valze);
-    assert_eq!(valze, 2421222841);
-
-    error_pairs
+    scores
 }
 
 
