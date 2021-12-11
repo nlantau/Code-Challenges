@@ -38,8 +38,7 @@ fn part1() {
         res += v[0] * v.len() as u32;
     }
     println!("Part 1: {}", res);
-    assert_eq!(res, 26397);
-    //assert_eq!(res, 243939);
+    assert_eq!(res, 243939);
 }
 
 #[allow(unused_mut)]
@@ -71,8 +70,7 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
             }
         }
     }
-    let mut incompleted: Vec<Vec<char>> = Vec::new();
-    //let mut stack2: Vec<char> = Vec::new();
+    let mut incomplete: Vec<Vec<char>> = Vec::new();
     for (i, v) in inp.iter().enumerate() {
         let mut copy_line = true;
 
@@ -82,30 +80,12 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
             }
         }
         if copy_line {
-            //for c in v.iter() {
-            //stack2.push(*c);
-            //}
-            //stack2.push('-');
-            incompleted.push(v.clone());
+            incomplete.push(v.clone());
         }
     }
-    /*
-    stack2.iter().for_each(|c| {
-        match c {
-            '-' => println!(),
-            _ => print!("{},", c),
-        }
-    });
 
-     */
-    println!("\n\n incompleted: ");
-    incompleted.iter().for_each(|v| {
-        println!();
-        v.iter().for_each(|c| print!("{}, ", c));
-    });
-
-    let mut incompleted_missing: Vec<Vec<char>> = Vec::new();
-    for (i, v) in incompleted.iter().enumerate() {
+    let mut incomplete_missing: Vec<Vec<char>> = Vec::new();
+    for (i, v) in incomplete.iter().enumerate() {
         let mut stack: Vec<char> = Vec::new();
 
         for c in v.iter() {
@@ -115,17 +95,12 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
                 stack.pop();
             }
         }
-        incompleted_missing.push(stack);
+        incomplete_missing.push(stack);
     }
 
-    println!("\n\n incompleted_missing: ");
-    incompleted_missing.iter().for_each(|v| {
-        println!();
-        v.iter().for_each(|c| print!("{}, ", c));
-    });
 
     let mut scores: Vec<u128> = Vec::new();
-    for v in incompleted_missing.iter_mut() {
+    for v in incomplete_missing.iter_mut() {
         let mut score: u128 = 0;
         while let Some(val) = v.pop() {
             match val {
@@ -138,39 +113,12 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
         }
         scores.push(score);
     }
-    println!("{:?}", scores);
 
-    scores.sort();
+    scores.sort_unstable();
     let valze = scores[scores.len() / 2];
-    println!("Middle: {}", valze);
+    println!("Part 2: {}", valze);
+    assert_eq!(valze, 2421222841);
 
-    /*
-    let mut stack3: Vec<char> = Vec::new();
-    for (i, v) in stack2.iter().enumerate() {
-        if is_opener(v) {
-            stack3.push(*v);
-        } else if is_closer(v) {
-            stack3.pop();
-        }
-    }
-    println!("\n\n stack3: ");
-    stack3.iter().for_each(|c| {
-        match c {
-            '-' => println!(),
-            _ => print!("{},", c),
-        }
-    });
-
-     */
-    println!();
-    /*
-    TODO: remove corrupted_lines from input => incomplete lines
-    TODO: new loop -> push if opener, pop if closer
-    TODO: reverse list or deque (?) while awarding points
-    TODO: Once solved, Rustify the solution (if let, while let, match)
-     */
-    corrupted_lines.iter().for_each(|c| print!("{},", c));
-    println!();
     error_pairs
 }
 
