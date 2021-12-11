@@ -2,6 +2,8 @@ use std::collections::hash_map::{Entry, VacantEntry};
 use std::collections::HashMap;
 use std::time;
 
+use itertools::chain;
+
 pub fn d10_2021_solution() {
     bench(part1);
     //bench(part2);
@@ -15,7 +17,7 @@ fn bench(f: fn()) {
 }
 
 fn get_data() -> Vec<Vec<char>> {
-    include_str!("../assets/d10_2021_test.txt").lines().collect::<Vec<&str>>()
+    include_str!("../assets/d10_2021.txt").lines().collect::<Vec<&str>>()
         .iter()
         .map(|&v| v.chars().collect::<Vec<char>>())
         .collect()
@@ -40,6 +42,7 @@ fn part1() {
     //assert_eq!(res, 243939);
 }
 
+#[allow(unused_mut)]
 fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
     let mut error_pairs: Vec<(char, char)> = Vec::new();
     let mut stack: Vec<char> = Vec::new();
@@ -68,6 +71,98 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
             }
         }
     }
+    let mut incompleted: Vec<Vec<char>> = Vec::new();
+    //let mut stack2: Vec<char> = Vec::new();
+    for (i, v) in inp.iter().enumerate() {
+        let mut copy_line = true;
+
+        for (j, n) in corrupted_lines.iter().enumerate() {
+            if *n == i {
+                copy_line = false;
+            }
+        }
+        if copy_line {
+            //for c in v.iter() {
+            //stack2.push(*c);
+            //}
+            //stack2.push('-');
+            incompleted.push(v.clone());
+        }
+    }
+    /*
+    stack2.iter().for_each(|c| {
+        match c {
+            '-' => println!(),
+            _ => print!("{},", c),
+        }
+    });
+
+     */
+    println!("\n\n incompleted: ");
+    incompleted.iter().for_each(|v| {
+        println!();
+        v.iter().for_each(|c| print!("{}, ", c));
+    });
+
+    let mut incompleted_missing: Vec<Vec<char>> = Vec::new();
+    for (i, v) in incompleted.iter().enumerate() {
+        let mut stack: Vec<char> = Vec::new();
+
+        for c in v.iter() {
+            if is_opener(c) {
+                stack.push(*c);
+            } else if is_closer(c) {
+                stack.pop();
+            }
+        }
+        incompleted_missing.push(stack);
+    }
+
+    println!("\n\n incompleted_missing: ");
+    incompleted_missing.iter().for_each(|v| {
+        println!();
+        v.iter().for_each(|c| print!("{}, ", c));
+    });
+
+    let mut scores: Vec<u128> = Vec::new();
+    for v in incompleted_missing.iter_mut() {
+        let mut score: u128 = 0;
+        while let Some(val) = v.pop() {
+            match val {
+                '(' => score = score * 5 + 1,
+                '[' => score = score * 5 + 2,
+                '{' => score = score * 5 + 3,
+                '<' => score = score * 5 + 4,
+                _ => panic!("At the disco"),
+            }
+        }
+        scores.push(score);
+    }
+    println!("{:?}", scores);
+
+    scores.sort();
+    let valze = scores[scores.len() / 2];
+    println!("Middle: {}", valze);
+
+    /*
+    let mut stack3: Vec<char> = Vec::new();
+    for (i, v) in stack2.iter().enumerate() {
+        if is_opener(v) {
+            stack3.push(*v);
+        } else if is_closer(v) {
+            stack3.pop();
+        }
+    }
+    println!("\n\n stack3: ");
+    stack3.iter().for_each(|c| {
+        match c {
+            '-' => println!(),
+            _ => print!("{},", c),
+        }
+    });
+
+     */
+    println!();
     /*
     TODO: remove corrupted_lines from input => incomplete lines
     TODO: new loop -> push if opener, pop if closer
@@ -78,6 +173,7 @@ fn syntax_checker(inp: &[Vec<char>]) -> Vec<(char, char)> {
     println!();
     error_pairs
 }
+
 
 fn calculate_syntax_score(ep: &[(char, char)]) -> HashMap<char, Vec<u32>> {
     let mut err_sum: HashMap<char, Vec<u32>> = HashMap::new();
