@@ -16,3 +16,4 @@ pub mod d8_2021;
 pub mod d9_2021;
 pub mod playground;
 pub mod d10_2021;
+pub mod d12_2021;
