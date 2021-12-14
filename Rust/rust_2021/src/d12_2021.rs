@@ -40,7 +40,6 @@ fn part1() {
             },
             _ => println!(),
         }
-        println!("Fakk din mamma");
 
     }
 }
