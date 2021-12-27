@@ -1,0 +1,93 @@
+# nlantau, 2021-12-14
+
+import os
+import sys
+
+
+class Node:
+    def __init__(self, tup):
+        self.tup = tup
+        self.is_start = self.check_start()
+        self.is_end = self.check_end()
+        self._set_tup_order()
+
+    def add_connection(self, Node):
+        self.connections.append(Node)
+
+    def _set_tup_order(self):
+        """ Set certain order in start and end Nodes
+        ('start', 'a') or ('a', 'end')
+        """
+        a,b = self.tup
+        if self.is_start:
+            if a == 'start': self.tup = (a,b)
+            else: self.tup = (b,a)
+        elif self.is_end:
+            if a == 'end': self.tup = (b,a)
+            else: self.tup = (a,b)
+
+
+    def is_start_node(self):
+        return self.is_start
+
+    def check_start(self):
+        return "start" in self.tup
+
+    def check_end(self):
+        return "end" in self.tup
+
+    def __repr__(self):
+        return f'\nNode: {self.tup}\nStart: {self.is_start}\nEnd: {self.is_end}\n'
+
+
+class Graph:
+    def __init__(self):
+        self.paths = 0
+        self.nodes = []           # 
+        self.connected_nodes = [] # look in self.nodes to get connections
+
+    def add_nodes(self, nodes):
+        for node in nodes:
+            self.nodes.append(node)
+
+    def __repr__(self):
+        return f'{self.nodes}'
+
+    def create_path(self):
+        for node in self.nodes:
+            if node.is_start_node():
+                print(node)
+                # iterate over the others until 'end'
+
+    def find_path(self, start_node):
+        pass
+
+
+def create_nodes(data):
+    """ nodes is our Graph containing Nodes """
+    return [Node(i) for i in data]
+
+
+def get_input():
+    """ Parse input to list of tuples """
+    data = "../assets/d12_2021_test_1.txt"
+    return [tuple(a.split('-')) for a in open(data).read().split()]
+
+
+
+def main():
+    pinp = get_input()
+    nodes = create_nodes(pinp)
+    #print(nodes)
+    G = Graph()
+    G.add_nodes(nodes)
+    print(G)
+    print(f'{" Path ":-^30}')
+    G.create_path()
+
+
+
+
+
+if __name__ == "__main__":
+    main()
