@@ -1,5 +1,9 @@
 # nlantau, 2022-01-01
 
+"""
+Would probably explode with cyclic graphs
+"""
+
 def depth_first_print(graph, source):
     stack = [source]
 
