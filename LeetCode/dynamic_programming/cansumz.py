@@ -11,13 +11,13 @@ If there are multiple combinations possible, you may return any
 single one
 """
 
-def howSumRecursive(targetSum, numbers):
+def howSumRecursive(targetSum, numbers):              # 7, [4,2,3]
     if targetSum == 0: return []
     if targetSum < 0: return None
 
-    for num in numbers:
-        remainder = targetSum - num
-        remainder_result = howSum(remainder, numbers)
+    for num in numbers:                               # 4 in [4,2,3]               # 3 in [4,2,3]
+        remainder = targetSum - num                   # 3 = 7 - 4                  # 0 = 3 - 3
+        remainder_result = howSumRecursive(remainder, numbers) # rr = howSum(3, [4,2,3])    # [] = howSum(0, [4,2,3])
         if remainder_result != None:
             return [*remainder_result, num]
     return None
@@ -37,6 +37,7 @@ def howSum(targetSum, numbers, memo={}):
     memo[targetSum] = None
     return None
 
+print(howSumRecursive(7, [2,3,4]))
 print(howSumRecursive(7, [5,3,4,7]))
 print(howSumRecursive(7, [5,4,1]))
 print(howSumRecursive(300, [5,3,4,7]))
