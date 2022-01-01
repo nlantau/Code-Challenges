@@ -26,6 +26,26 @@ class Solution:
             return self.hasPathSum(root.left, targetSum - root.val) or \
             self.hasPathSum(root.right, targetSum - root.val)
 
+    def hasPathSum2(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        stack = [root]
+        seq = []
+        tmp = []
+
+        while stack:
+            curr = stack.pop()
+            print(curr.val)
+            
+            tmp.append(curr.val)
+
+            for neighbor in [curr.left, curr.right]:
+                if neighbor:
+                    stack.append(neighbor)
+                elif not neighbor:
+                    seq.append(tmp)
+                    tmp = []
+        return seq
+
+
 
 """
 Notes:
@@ -59,6 +79,7 @@ if __name__ == "__main__":
     ar_r.right = ar_r_r
 
     print(Solution().hasPathSum(a, 22))
+    print(Solution().hasPathSum2(a, 22))
 
     z = TreeNode(None)
     print(Solution().hasPathSum(z, 0))
