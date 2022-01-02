@@ -37,10 +37,10 @@ class Solution:
             
             tmp.append(curr.val)
 
-            for neighbor in [curr.left, curr.right]:
-                if neighbor:
-                    stack.append(neighbor)
-                elif not neighbor:
+            for child in [curr.left, curr.right]:
+                if child:
+                    stack.append(child)
+                elif not child:
                     seq.append(tmp)
                     tmp = []
         return seq
