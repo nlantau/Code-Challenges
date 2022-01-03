@@ -28,6 +28,12 @@ class Solution:
             first, sec = first + sec, first
         return first
 
+    def climbStairs2(self, n: int, memo={}) -> int:
+        if n in memo: return memo[n]
+        if n <= 2: return 1
+        memo[n] = self.climbStairs2(n-1, memo) + self.climbStairs2(n-2, memo)
+        return memo[n]
+
 """
 Notes:
 67 ms, super-slow, 14.2 MB, 72.59% better
@@ -35,5 +41,8 @@ Notes:
 
 if __name__ == "__main__":
     print(Solution().climbStairs(3))
+    print(Solution().climbStairs2(3))
     print(Solution().climbStairs(45))
+    print(Solution().climbStairs2(45))
+    print(Solution().climbStairs2(46))
         
