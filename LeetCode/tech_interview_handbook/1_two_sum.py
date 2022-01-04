@@ -43,7 +43,9 @@ class Solution:
                 return res
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-
+        """
+        Completed
+        """
         for i in range(len(nums)):
             for j in range(len(nums)-1, i-1, -1):
                 if i == j:
@@ -52,6 +54,9 @@ class Solution:
                     return [i, j]
 
     def stolen_twoSum(self, nums: List[int], target: int) -> List[int]:
+        """
+        Stolen. Really cool
+        """
         hash_table = {}
         for i in range(len(nums)):
             if nums[i] in hash_table:
