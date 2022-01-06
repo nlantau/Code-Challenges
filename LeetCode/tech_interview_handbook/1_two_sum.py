@@ -58,11 +58,22 @@ class Solution:
         Stolen. Really cool
         """
         hash_table = {}
+        print(f'target: {target}')
         for i in range(len(nums)):
             if nums[i] in hash_table:
+                print("Returning...")
+                print(f'hash_table: {hash_table}')
+                print(f'hash_table[nums[i]]: {hash_table[nums[i]]}')
+                print(f'nums[i]: {nums[i]}')
+                print(f'i: {i}')
                 return [hash_table[nums[i]], i]
             else:
                 hash_table[target - nums[i]] = i
+                print("Appending...")
+                print(f'hash_table: {hash_table}')
+                #print(f'hash_table[nums[i]]: {hash_table[nums[i]]}')
+                print(f'nums[i]: {nums[i]}')
+                print(f'i: {i}')
 
 
 """
@@ -73,7 +84,8 @@ Super slow solution. Should definately look at other submissions and
 learn their strategies.
 
 TODO:
-Really need to study stolen_twoSum(). Do some drawings with test cases to learn
+Really need to study stolen_twoSum(). Do some drawings with test cases to learn.
+Clever solution. Made drawing to understand it better
 
 """
 
@@ -83,3 +95,10 @@ if __name__ == "__main__":
     print(Solution().twoSum([2,7,11,15], 9))
     print(Solution().twoSum([3,2,4], 6))
     print(Solution().twoSum([3,3], 6))
+    print("<----------->")
+    print(Solution().stolen_twoSum([2,7,11,15], 9))
+    print("<----------->")
+    print(Solution().stolen_twoSum([3,2,4], 6))
+    print("<----------->")
+    print(Solution().stolen_twoSum([3,3], 6))
+    print("<----------->")
