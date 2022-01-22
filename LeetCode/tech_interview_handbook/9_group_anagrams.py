@@ -14,7 +14,7 @@ class Solution:
             else:
                 hash_table[sorted_word] = [word]
 
-        print(hash_table)
+        print(f'{hash_table=}')
 
         return list(hash_table.values())
         
