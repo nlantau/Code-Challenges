@@ -3,7 +3,7 @@
 from typing import *
 
 class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
+    def missingNumber2(self, nums: List[int]) -> int:
         # Brute force solution
         nums.sort() # O(NlogN)
         l, r = 0, len(nums)
@@ -15,11 +15,21 @@ class Solution:
                 return nums[l] + 1
             l += 1
 
+    def missingNumber(self, nums: List[int]) -> int:
+        # Infitite series - the actual sum of the list = res
+        # n-1 due to starting at 0 and not 1
+        from functools import reduce
+        n = len(nums) + 1
+        return (n*(n-1)//2)-reduce(lambda x,y:x+y, nums)
 """
 Notes:
 Brute force: Super-slow. 4058 ms, 5.01% faster, 15.5 MB, 51.77%
-
+Infinite series: 204 ms, 38.28% faster, 15.6 MB, 18.18% better
 Failed a few times due to not checking nums[0] for 0 after sorting
+
+TODO: Cyclic Sort?
+
+(n * (n-1) / 2 ) - reduction
 
 """
 
