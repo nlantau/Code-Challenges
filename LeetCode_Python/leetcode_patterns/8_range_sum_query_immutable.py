@@ -26,6 +26,10 @@ class NumArray:
             print(res, end=', ')
         return res
 
+"""
+TODO: Implement Prefix sum. Or better - learn how/why/when
+to use a Prefix sum strategy
+"""
 
 class TestClass:
     def test_example_2(self):
