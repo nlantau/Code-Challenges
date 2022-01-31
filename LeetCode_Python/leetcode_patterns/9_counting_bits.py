@@ -4,7 +4,7 @@ from typing import *
 
 
 class Solution:
-    def countBits(self, n: int) -> List[int]:
+    def countBits2(self, n: int) -> List[int]:
         # Brute force solution
         res = []
 
@@ -19,11 +19,25 @@ class Solution:
             res.append(temp)
         return res
 
+    def countBits3(self, n: int) -> List[int]:
+        arr = [0]
+
+        for i in range(1, n + 1):
+            arr.append(arr[i // 2] + i % 2)
+        return arr
+
+    def countBits(self, n: int) -> List[int]:
+        arr = [0] * (n + 1)
+
+        for i in range(1, n + 1):
+            arr[i] = arr[i >> 1] + i % 2
+        return arr
 """
 Notes:
 Brute force solution: 202 ms, 19.99%, 20.9 MB, 70.62%, O(N^2)
+O(N) solution       : 134 ms, 40.29%, 20.8 MB, 91.50% 
 
-TODO: How about O(NlogN) or even O(N)?
+
 """
 
 class TestClass:
