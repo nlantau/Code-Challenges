@@ -38,12 +38,9 @@ struct ListNode* middleNode(struct ListNode* head)
 	struct ListNode *curr = head;
 	int size = sizeof_list(head);
 	size /= 2;
-	while(size > 0) {
+	while(size-- > 0)
 		curr = curr->next;
-		size--;
-	}
-	head = curr;
-	return head;
+	return curr;
 }
 
 void print_list(struct ListNode *head)
