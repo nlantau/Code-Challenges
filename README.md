@@ -1,15 +1,15 @@
 # General
-A quite chaotic structure of in this repository. I use these challenges to explore
+A quite chaotic structure in this repository. I use these challenges to explore
 new languages, paradigms, algorithms and data structures. 
 I'm into learning new approaches and ways of solving problems. A problem can many times be
 solved using several different approaches. This fascinates me quite a lot.
-I'm taught the imperative and procedural way of program, and object-oriented programming. 
+I'm taught the imperative and procedural, and object-oriented way of programming. 
 I find functional programming and array programming as two very intersting paradigms, where
 Haskell and APL are my favorites (don't ask me anything about APL though. I'm very new to this).
 
 ## CodeWars
 Often quick and dirty solutions.
-Overall: 4 kyu/30.4%
+Overall: 4 kyu.
 
 ## AoC
 Super fun December challenge that I never really have time to complete.
