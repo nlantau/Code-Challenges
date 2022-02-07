@@ -3,6 +3,7 @@
  *
  * nlantau, 2022-02-06
  ****************************************************************************/
+#include "linked_list.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -18,24 +19,6 @@
  * 4. return head
  *
  ****************************************************************************/
-
-struct ListNode {
-    int val;
-    struct ListNode *next;
-};
-
-void print_list(struct ListNode *head)
-{
-	struct ListNode *curr = head;
-
-	printf("[");
-	while(curr != NULL) {
-		printf("%d,", curr->val);
-		curr = curr->next;
-	}
-	printf("]\n");
-}
-
 struct ListNode* removeElements(struct ListNode *head, int val)
 {
 	if (head == NULL)
@@ -62,47 +45,25 @@ struct ListNode* removeElements(struct ListNode *head, int val)
 int main(void)
 {
 	/* Example 1 */
-	struct ListNode *a = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *b = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *c = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *d = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *e = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *f = (struct ListNode*)malloc(sizeof(struct ListNode));
-	struct ListNode *g = (struct ListNode*)malloc(sizeof(struct ListNode));
-
-	a->val = 1;
-	b->val = 2;
-	c->val = 6;
-	d->val = 3;
-	e->val = 4;
-	f->val = 5;
-	g->val = 6;
-
-	a->next = b;
-	b->next = c;
-	c->next = d;
-	d->next = e;
-	e->next = f;
-	f->next = g;
-	g->next = NULL;
+	struct ListNode *a = make_node(1);
+	insert_node(a, 2);
+	insert_node(a, 6);
+	insert_node(a, 3);
+	insert_node(a, 4);
+	insert_node(a, 5);
+	insert_node(a, 6);
 
 	print_list(a);
 	a = removeElements(a, 6);
 	print_list(a);
 
-	//assert(res == true);
 
-
-	free(a); a = NULL;
-	free(b); b = NULL;
-	free(c); c = NULL;
-	free(d); d = NULL;
-	free(e); e = NULL;
-	free(f); f = NULL;
+	if (free_list(a))
+		return 0;
 
 	/* Example 2 */
 
 	/* Example 3 */
 
-	return 0;
+	return -1;
 }
