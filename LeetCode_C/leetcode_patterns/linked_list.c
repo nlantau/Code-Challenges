@@ -44,6 +44,8 @@ void insert_node(struct ListNode *head, int val)
 
 void push_node(struct ListNode **head, int val)
 {
+	/* Practice using pointers to pointers */
+
 	struct ListNode *new_head = (struct ListNode*)malloc(sizeof(struct ListNode));
 
 	new_head->val = val;
