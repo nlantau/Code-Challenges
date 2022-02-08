@@ -43,12 +43,12 @@ void pointer_arithmetic(void)
 	int arr[] = {1,1,2,2,3,4,4,5,1337};
 	int size = sizeof(arr) / sizeof(int);
 
-	printf("arr[0]: %d\n", *&arr[size - 1]);
+	printf("*&arr[size - 1]: %d\n", *&arr[size - 1]);
 
-	printf("arr[0]: %d\n", *&arr[0]);
-	printf("arr[0]: %d\n", *arr);
+	printf("&arr[0]: %d\n", *&arr[0]);
+	printf("*arr: %d\n", *arr);
 
-	printf("arr[0]: %d\n", *&arr[sizeof(arr)/ sizeof(int)- sizeof(arr)/ sizeof(int)]);
+	printf("*&arr[size - size]: %d\n", *&arr[sizeof(arr)/ sizeof(int)- sizeof(arr)/ sizeof(int)]);
 
 
 	for (int i = 0; i < size; i++) {
@@ -57,6 +57,21 @@ void pointer_arithmetic(void)
 	}
 		
 	printf("\n");
+}
+
+void pointer_to_pointer(void)
+{
+	printf("> pointer_to_pointer() start...\n");
+
+	int x = 5;
+	int *pX = &x;
+
+	printf("x %d\n", x);
+	printf("&x %d\n", &x);
+	printf("pX %d\n", pX);
+	printf("*pX %d\n", *pX);
+
+	printf("> pointer_to_pointer() end...\n");
 }
 
 /**** Notes ******************************************************************
@@ -86,6 +101,7 @@ int main(void)
 	int b = 10;
 	if (dereference_void_pointer(&b)) {
 		pointer_arithmetic();
+		pointer_to_pointer();
 		return 0;
 	}
 
