@@ -42,6 +42,16 @@ void insert_node(struct ListNode *head, int val)
 	curr->next = next;
 }
 
+void push_node(struct ListNode **head, int val)
+{
+	struct ListNode *new_head = (struct ListNode*)malloc(sizeof(struct ListNode));
+
+	new_head->val = val;
+	new_head->next = *head;
+	*head = new_head;
+}
+
+
 struct ListNode *make_node(int value)
 {
 	struct ListNode *a = (struct ListNode*)malloc(sizeof(struct ListNode));

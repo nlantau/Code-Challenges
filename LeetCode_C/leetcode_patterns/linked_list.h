@@ -19,6 +19,7 @@ struct ListNode {
 
 struct ListNode *make_node(int value);
 void insert_node(struct ListNode *head, int val);
+void push_node(struct ListNode **head, int val);
 void print_list(struct ListNode *head);
 int free_list(struct ListNode *head);
 
