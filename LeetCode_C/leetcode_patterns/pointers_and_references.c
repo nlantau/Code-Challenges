@@ -56,23 +56,40 @@ void pointer_arithmetic(void)
 		printf("%d,\n", arr[i]);
 	}
 		
+
+	printf("\n\n> Continued pointer arithmetic...\n");
+
+	char *s = "hello everybody allihopa", *a = s;
+
+	while (*s)
+		printf("%c", *s++);
+
 	printf("\n");
+
+	for (s = a; *s; )
+		printf("%c", *s++);
+
+
+	printf("\n> Ending pointer arithmetic...\n\n");
 }
 
-void pointer_to_pointer(void)
+void pointer_to_pointer(void *num)
 {
 	printf("> pointer_to_pointer() start...\n");
+
+	*(int*)num = 5;
 
 	int x = 5;
 	int *pX = &x;
 
 	printf("x %d\n", x);
-	printf("&x %d\n", &x);
-	printf("pX %d\n", pX);
+	printf("&x %p\n", &x);
+	printf("pX %p\n", pX);
 	printf("*pX %d\n", *pX);
 
 	printf("> pointer_to_pointer() end...\n");
 }
+
 
 /**** Notes ******************************************************************
  *
@@ -92,6 +109,7 @@ int main(void)
 	print_list(a);
 
 	push_node(&a, 6);
+	a = push_node_sp(a, 69);
 
 	print_list(a);
 
@@ -101,11 +119,15 @@ int main(void)
 	int b = 10;
 	if (dereference_void_pointer(&b)) {
 		pointer_arithmetic();
-		pointer_to_pointer();
-		return 0;
+		int x = 3;
+		pointer_to_pointer(&x);
+		printf("x: was 3, change to %d\n", x);
 	}
+
+
+
 
 	/* Example 3 */
 
-	return -1;
+	return 0;
 }

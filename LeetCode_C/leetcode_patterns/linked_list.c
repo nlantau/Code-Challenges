@@ -44,7 +44,11 @@ void insert_node(struct ListNode *head, int val)
 
 void push_node(struct ListNode **head, int val)
 {
-	/* Practice using pointers to pointers */
+	/* Modifying the pointer inside this function
+	 * requires passing the address of the head
+	 * which when dereferencing it ( *head ) will
+	 * give us the value of the address to the pointer
+	 */
 
 	struct ListNode *new_head = (struct ListNode*)malloc(sizeof(struct ListNode));
 
@@ -53,6 +57,19 @@ void push_node(struct ListNode **head, int val)
 	*head = new_head;
 }
 
+void *push_node_sp(struct ListNode *head, int val)
+{
+	/* Returning the pointer instead of directly
+	 * changing the pointer as in push_node()
+	 */
+
+	struct ListNode *new_head = (struct ListNode*)malloc(sizeof(struct ListNode));
+
+	new_head->val = val;
+	new_head->next = head;
+	head = new_head;
+	return head;
+}
 
 struct ListNode *make_node(int value)
 {
@@ -72,6 +89,11 @@ int main(void)
 	insert_node(a, 2);
 	print_list(a);
 	insert_node(a, 3);
+	print_list(a);
+
+	push_node(&a, 1337);
+	a = push_node_sp(a, 69);
+
 	print_list(a);
 
 	if (free_list(a))
