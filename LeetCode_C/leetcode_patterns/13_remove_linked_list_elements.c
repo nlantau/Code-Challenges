@@ -3,7 +3,7 @@
  *
  * nlantau, 2022-02-06
  ****************************************************************************/
-#include "linked_list.h"
+#include "../linked_list.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdbool.h>
