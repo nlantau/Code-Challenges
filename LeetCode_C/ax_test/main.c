@@ -12,39 +12,57 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <assert.h>
+#include <signal.h>
 
 /**** Defines ***************************************************************/
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 /**** Typedefs **************************************************************/
-/**** Defines ***************************************************************/
+enum _period {
+    winter, spring, summer, autumn,
+};
+
+static const char *period[] = {
+    "WINTER", "SPRING", "SUMMER", "AUTUMN",
+};
+
 /**** Variables *************************************************************/
 /**** Constants *************************************************************/
 /**** Prototypes ************************************************************/
 char *solution(int T[], int N);
+void sig_handler(int signum);
 
 /**** Functions *************************************************************/
-int main(void)
+int main(int argc, char *argv[])
 {
-    /* Test 1 */
-    int x[] = {-3,-14,-5,7,8,42,8,3};                     //< 34 -> SUMMER
-                                                          //
-    int *a = malloc(sizeof(int *)*8), i = 0;
+    signal(SIGABRT, sig_handler);
 
+    int *a, size;
 
-    while (i < 8) {
-        a[i] = x[i];
-        i++;
+    /* Test 1 - Either pass int arr as argv or run default */
+    if (argc > 1) {
+        size = argc - 1;
+        a = malloc(sizeof(int) * size);
+
+        for (int x = 0; x < size; ++x)
+            sscanf(argv[x + 1], "%d", &a[x]);
+
+    } else if (argc == 1) {
+        int x[] = {-3,-14,-5,7,8,42,8,3};                     //< 34 -> SUMMER
+        size = sizeof(x)/sizeof(x[0]);
+
+        a = malloc(sizeof(int) * size);
+        memcpy(a, x, size*sizeof(*a));
     }
 
-    printf("i: %d\n", i);
-
-    char *res_a = solution(a, 8);
+    char *res_a = solution(a, size);
 
     free(a); a = NULL;
 
-    assert(strcmp(res_a, "SUMMER") == 0);
+    if (argc == 1)
+        assert(strcmp(res_a, "SUMMER") == 0);
+
     printf("> [%s]\n", res_a);
 
     free(res_a); res_a = NULL;
@@ -62,11 +80,20 @@ int main(void)
     return 0;
 }
 
+void sig_handler(int signum)
+{
+    printf("> Oh well... Caught signal %d..\n", signum);
+    exit(1);
+}
+
 char *solution(int T[], int N)
 {
+    /* 8 <= N <= 200
+     * -1000 <= T[i] <= 1000
+     */
     if (N % 4 != 0) return NULL;
 
-    char *periods[] = {"WINTER", "SPRING", "SUMMER","AUTUMN",}, *s = malloc(sizeof(char) * 8);
+    char *s = malloc(sizeof(char) * 8);
     int temp_min = INT_MAX, temp_max = INT_MIN, max_amp = 0, diff = 0;
 
     /* Nested loop, but it's still O(N) */
@@ -77,7 +104,7 @@ char *solution(int T[], int N)
         }
 
         if ((diff = abs(temp_max - temp_min)) > max_amp)
-            strcpy(s, periods[period_nr]);
+            strcpy(s, period[period_nr]);
 
         max_amp = MAX(max_amp, diff);
         temp_min = INT_MAX;
