@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <limits.h>
 #include <assert.h>
 
@@ -29,8 +28,21 @@ char *solution(int T[], int N);
 int main(void)
 {
     /* Test 1 */
-    int a[] = {-3,-14,-5,7,8,42,8,3};                     //< 34 -> SUMMER
-    char *res_a = solution(a, (sizeof(a)/sizeof(a[0])));
+    int x[] = {-3,-14,-5,7,8,42,8,3};                     //< 34 -> SUMMER
+                                                          //
+    int *a = malloc(sizeof(int *)*8), i = 0;
+
+
+    while (i < 8) {
+        a[i] = x[i];
+        i++;
+    }
+
+    printf("i: %d\n", i);
+
+    char *res_a = solution(a, 8);
+
+    free(a); a = NULL;
 
     assert(strcmp(res_a, "SUMMER") == 0);
     printf("> [%s]\n", res_a);
@@ -47,54 +59,30 @@ int main(void)
 
     free(res_b); res_b = NULL;
 
-	return 0;
+    return 0;
 }
 
 char *solution(int T[], int N)
 {
-    /* Assume that:
-     * N % 4 == 0
-     * -1000 <= T[i] <= 1000
-     * 8 <= N <= 200
-     *
-     * Amplitude: abs(max(T_period_x), min(T_period_x))
-     */
     if (N % 4 != 0) return NULL;
 
-    char *periods[] = {
-        "WINTER",
-        "SPRING",
-        "SUMMER",
-        "AUTUMN",
-    };
+    char *periods[] = {"WINTER", "SPRING", "SUMMER","AUTUMN",}, *s = malloc(sizeof(char) * 8);
+    int temp_min = INT_MAX, temp_max = INT_MIN, max_amp = 0, diff = 0;
 
-    int i = 0, j = 0;
-
-    int period_size = N / 4, period_nr = 0;
-    int temp_min = INT_MAX, temp_max = INT_MIN;
-    int max_amp = 0, int diff = 0;
-
-    char *s = malloc(sizeof(char) * 8);
-
-    /* Nested loop, but only for readability. It's still O(N) */
-    for (; i < N - 1; i += j, period_nr++) {
+    /* Nested loop, but it's still O(N) */
+    for (int i = 0, j = 0, period_size = N / 4, period_nr = 0; i < N - 1; i += j, period_nr++) {
         for(j = 0; j < period_size; ++j) {
             temp_min = MIN(temp_min, T[i+j]);
             temp_max = MAX(temp_max, T[i+j]);
         }
 
-        diff = temp_max - temp_min;
-        diff = abs(diff);
-
-        if (diff > max_amp)
+        if ((diff = abs(temp_max - temp_min)) > max_amp)
             strcpy(s, periods[period_nr]);
 
         max_amp = MAX(max_amp, diff);
         temp_min = INT_MAX;
         temp_max = INT_MIN;
     }
-
     return s;
-
 }
 /**** End *******************************************************************/
